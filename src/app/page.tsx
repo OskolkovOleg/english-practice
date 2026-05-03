@@ -1,69 +1,84 @@
 import Link from 'next/link';
 import { BookOpen, Brain, Layers } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { getExerciseStats } from '@/lib/data';
-import { HomeHero } from '@/components/home-hero';
 
 export default async function HomePage() {
   const stats = await getExerciseStats();
 
-  const features = [
+  const sections = [
     {
       icon: BookOpen,
       title: 'Грамматика',
-      description: 'Изучайте теорию по темам: времена, артикли, модальные глаголы и условные предложения.',
+      desc: `${stats.totalTopics} тем`,
       href: '/grammar',
-      color: 'bg-blue-50 text-blue-600 border-blue-100',
-      iconBg: 'bg-blue-100',
+      bg: 'bg-[#58cc02]',
+      hover: 'hover:bg-[#4caf50]',
+      shadow: 'shadow-[0_6px_0_#45a005]',
+      hoverShadow: 'hover:shadow-[0_4px_0_#45a005] hover:translate-y-[2px]',
     },
     {
       icon: Brain,
       title: 'Практика',
-      description: 'Решайте упражнения на перевод, заполнение пропусков и тесты с объяснениями.',
+      desc: `${stats.totalExercises} заданий`,
       href: '/practice',
-      color: 'bg-emerald-50 text-emerald-600 border-emerald-100',
-      iconBg: 'bg-emerald-100',
+      bg: 'bg-[#1cb0f6]',
+      hover: 'hover:bg-[#1899d6]',
+      shadow: 'shadow-[0_6px_0_#1583b5]',
+      hoverShadow: 'hover:shadow-[0_4px_0_#1583b5] hover:translate-y-[2px]',
     },
     {
       icon: Layers,
       title: 'Слова',
-      description: 'Учите слова с помощью интерактивных карточек, транскрипций и примеров.',
+      desc: `${stats.totalWords}+ слов`,
       href: '/words',
-      color: 'bg-amber-50 text-amber-600 border-amber-100',
-      iconBg: 'bg-amber-100',
+      bg: 'bg-[#ffc800]',
+      hover: 'hover:bg-[#e6b400]',
+      shadow: 'shadow-[0_6px_0_#cc9e00]',
+      hoverShadow: 'hover:shadow-[0_4px_0_#cc9e00] hover:translate-y-[2px]',
+      textColor: 'text-[#3f3f3f]',
     },
   ];
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-12 md:py-20">
-      <HomeHero
-        totalTopics={stats.totalTopics}
-        totalExercises={stats.totalExercises}
-        totalWords={stats.totalWords}
-      />
+    <div className="mx-auto max-w-xl px-4 py-10 md:py-16">
+      {/* Heading */}
+      <div className="text-center mb-12">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-[#3f3f3f] mb-4">
+          Учим английский
+        </h1>
+        <p className="text-xl text-[#777]">
+          Выбери, чем хочешь заняться
+        </p>
+      </div>
 
-      {/* Features */}
-      <section className="grid md:grid-cols-3 gap-6">
-        {features.map((feature, i) => (
-          <div key={feature.href}>
-            <Link href={feature.href}>
-              <Card className={`h-full transition-all hover:shadow-lg hover:-translate-y-1 ${feature.color}`}>
-                <CardHeader>
-                  <div className={`w-12 h-12 rounded-xl ${feature.iconBg} flex items-center justify-center mb-3`}>
-                    <feature.icon className="h-6 w-6" />
-                  </div>
-                  <CardTitle className="text-xl">{feature.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-base leading-relaxed">
-                    {feature.description}
-                  </CardDescription>
-                </CardContent>
-              </Card>
-            </Link>
-          </div>
+      {/* Big colorful buttons */}
+      <div className="space-y-4">
+        {sections.map((s) => (
+          <Link key={s.href} href={s.href}>
+            <div
+              className={`flex items-center gap-5 rounded-2xl p-5 md:p-6 text-white transition-all ${s.bg} ${s.hover} ${s.shadow} ${s.hoverShadow} ${s.textColor || ''}`}
+            >
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-white/20">
+                <s.icon className="h-7 w-7" />
+              </div>
+              <div>
+                <div className="text-2xl font-extrabold">{s.title}</div>
+                <div className={`text-base font-bold opacity-90 ${s.textColor ? 'text-[#3f3f3f]/70' : ''}`}>
+                  {s.desc}
+                </div>
+              </div>
+            </div>
+          </Link>
         ))}
-      </section>
+      </div>
+
+      {/* Daily tip */}
+      <div className="mt-10 rounded-2xl border-2 border-[#e5e5e5] bg-white p-6 text-center">
+        <div className="text-lg font-bold text-[#3f3f3f] mb-2">💡 Совет дня</div>
+        <p className="text-base text-[#777]">
+          Регулярность важнее интенсивности. Лучше 15 минут каждый день, чем 2 часа раз в неделю.
+        </p>
+      </div>
     </div>
   );
 }

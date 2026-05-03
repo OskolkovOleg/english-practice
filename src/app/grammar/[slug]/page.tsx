@@ -1,10 +1,8 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getTopicBySlug } from '@/lib/data';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, BookOpen } from 'lucide-react';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -17,47 +15,36 @@ export default async function TopicPage({ params }: Props) {
   if (!topic) return notFound();
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-12">
+    <div className="mx-auto max-w-3xl px-4 py-10 md:py-14">
       <Link href="/grammar">
-        <Button variant="ghost" size="sm" className="mb-6 -ml-2 gap-1 text-muted-foreground">
-          <ArrowLeft className="h-4 w-4" />
-          Назад к темам
+        <Button variant="ghost" size="sm" className="mb-6 -ml-2 gap-1 text-[#777] hover:text-[#3f3f3f] text-base font-bold">
+          <ArrowLeft className="h-5 w-5" />
+          Назад
         </Button>
       </Link>
 
-      <div className="mb-10">
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">{topic.title}</h1>
-        <p className="text-muted-foreground text-lg">{topic.description}</p>
+      <div className="mb-8">
+        <h1 className="text-3xl md:text-4xl font-extrabold text-[#3f3f3f] mb-2">{topic.title}</h1>
+        <p className="text-lg text-[#777] font-bold">{topic.description}</p>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-3">
         {topic.lessons.map((lesson, index) => (
           <Link key={lesson.id} href={`/grammar/${topic.slug}/lesson/${lesson.id}`}>
-            <Card className="transition-all hover:shadow-md hover:-translate-y-0.5 group">
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-sm font-bold text-primary">
-                      {index + 1}
-                    </div>
-                    <CardTitle className="text-lg group-hover:text-primary transition-colors">
-                      {lesson.title}
-                    </CardTitle>
-                  </div>
-                  <Badge variant="secondary" className="text-xs">
-                    {lesson._count.exercises} заданий
-                  </Badge>
+            <div className="flex items-center gap-4 rounded-2xl border-2 border-[#e5e5e5] bg-white p-5 transition-all hover:border-[#1cb0f6] hover:shadow-md">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1cb0f6] text-white text-lg font-extrabold">
+                {index + 1}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="text-xl font-extrabold text-[#3f3f3f]">{lesson.title}</div>
+                <div className="text-base font-bold text-[#777] mt-0.5">
+                  {lesson._count.exercises} заданий
                 </div>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center justify-between">
-                  <CardDescription>
-                    Нажмите, чтобы изучить теорию и выполнить упражнения
-                  </CardDescription>
-                  <ArrowRight className="h-4 w-4 text-muted-foreground transition-transform group-hover:translate-x-1" />
-                </div>
-              </CardContent>
-            </Card>
+              </div>
+              <div className="rounded-lg px-3 py-1 text-sm font-bold bg-[#1cb0f6]/10 text-[#1cb0f6]">
+                Начать
+              </div>
+            </div>
           </Link>
         ))}
       </div>

@@ -21,41 +21,46 @@ export default async function LessonPage({ params }: Props) {
   if (!topic || !lesson || lesson.topicId !== topic.id) return notFound();
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-12">
+    <div className="mx-auto max-w-3xl px-4 py-10 md:py-14">
       <Link href={`/grammar/${slug}`}>
-        <Button variant="ghost" size="sm" className="mb-6 -ml-2 gap-1 text-muted-foreground">
-          <ArrowLeft className="h-4 w-4" />
-          Назад к урокам
+        <Button
+          variant="ghost"
+          size="sm"
+          className="mb-6 -ml-2 gap-1 text-[#777] hover:text-[#3f3f3f] text-base font-bold"
+        >
+          <ArrowLeft className="h-5 w-5" />
+          Назад
         </Button>
       </Link>
 
       <div className="mb-8">
-        <div className="text-sm text-muted-foreground mb-1">{topic.title}</div>
-        <h1 className="text-3xl font-bold tracking-tight">{lesson.title}</h1>
+        <div className="text-base font-bold text-[#58cc02] mb-1">{topic.title}</div>
+        <h1 className="text-3xl md:text-4xl font-extrabold text-[#3f3f3f]">{lesson.title}</h1>
       </div>
 
       <Tabs defaultValue="theory" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-2 max-w-sm">
-          <TabsTrigger value="theory" className="gap-2">
-            <BookOpen className="h-4 w-4" />
+        <TabsList className="grid w-full grid-cols-2 max-w-sm h-14 rounded-xl bg-[#f7f9fc] p-1">
+          <TabsTrigger
+            value="theory"
+            className="gap-2 text-base font-extrabold rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-[#58cc02]"
+          >
+            <BookOpen className="h-5 w-5" />
             Теория
           </TabsTrigger>
-          <TabsTrigger value="practice" className="gap-2">
-            <PenTool className="h-4 w-4" />
+          <TabsTrigger
+            value="practice"
+            className="gap-2 text-base font-extrabold rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-[#1cb0f6]"
+          >
+            <PenTool className="h-5 w-5" />
             Практика
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="theory">
-          <Card>
-            <CardContent className="pt-6">
+          <Card className="border-2 border-[#e5e5e5] shadow-none">
+            <CardContent className="pt-8 pb-8">
               <div
-                className="prose prose-slate max-w-none dark:prose-invert
-                  prose-headings:font-bold prose-headings:tracking-tight
-                  prose-p:leading-relaxed prose-li:marker:text-primary
-                  prose-strong:text-foreground
-                  prose-ul:space-y-1
-                "
+                className="space-y-6 text-lg leading-relaxed text-[#3f3f3f]"
                 dangerouslySetInnerHTML={{ __html: lesson.content }}
               />
             </CardContent>

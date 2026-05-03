@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "EnglishFlow — Интерактивная среда для изучения английского",
-  description: "Практика перевода, тренировка времен, изучение слов и грамматики в одном месте.",
+  title: "EnglishFlow",
+  description: "Учим английский играючи",
 };
 
 export default function RootLayout({
@@ -29,12 +29,9 @@ export default function RootLayout({
       lang="ru"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground">
+      <body className="min-h-full flex flex-col bg-[#f7f9fc] text-foreground">
         <Navbar />
         <main className="flex-1">{children}</main>
-        <footer className="border-t border-border/40 py-6 text-center text-sm text-muted-foreground">
-          EnglishFlow — создано для практики английского языка
-        </footer>
         <Toaster position="top-center" richColors />
       </body>
     </html>

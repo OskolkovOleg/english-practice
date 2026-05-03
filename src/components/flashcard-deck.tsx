@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Volume2, RotateCw, ChevronLeft, ChevronRight, Eye, EyeOff } from 'lucide-react';
+import { RotateCw, ChevronLeft, ChevronRight, Eye, EyeOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -30,8 +30,8 @@ export function FlashcardDeck({ words }: FlashcardDeckProps) {
 
   if (words.length === 0) {
     return (
-      <div className="text-center py-12 text-muted-foreground">
-        В этой категории пока нет слов.
+      <div className="text-center py-12 text-[#777] text-lg font-bold">
+        Слов пока нет.
       </div>
     );
   }
@@ -56,7 +56,7 @@ export function FlashcardDeck({ words }: FlashcardDeckProps) {
 
   const handleKnown = () => {
     setKnown((k) => ({ ...k, [word.id]: true }));
-    toast.success('Отмечено как изученное');
+    toast.success('Запомнено!');
     handleNext();
   };
 
@@ -78,15 +78,19 @@ export function FlashcardDeck({ words }: FlashcardDeckProps) {
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="text-center py-12"
+        className="text-center py-16"
       >
-        <div className="text-5xl mb-4">🎉</div>
-        <h3 className="text-2xl font-bold mb-2">Сессия завершена!</h3>
-        <p className="text-muted-foreground mb-6">
-          Вы знаете {knownCount} из {words.length} слов.
+        <div className="text-7xl mb-6">🎉</div>
+        <h3 className="text-3xl font-extrabold text-[#3f3f3f] mb-3">Сессия завершена!</h3>
+        <p className="text-lg text-[#777] font-bold mb-8">
+          Знаешь {knownCount} из {words.length} слов
         </p>
-        <Button onClick={handleRestart} variant="outline" className="gap-2">
-          <RotateCw className="h-4 w-4" />
+        <Button
+          onClick={handleRestart}
+          variant="outline"
+          className="gap-2 text-base font-bold h-12 px-6 rounded-xl border-2"
+        >
+          <RotateCw className="h-5 w-5" />
           Начать заново
         </Button>
       </motion.div>
@@ -96,34 +100,33 @@ export function FlashcardDeck({ words }: FlashcardDeckProps) {
   return (
     <div className="space-y-6">
       {/* Stats */}
-      <div className="flex items-center justify-between text-sm text-muted-foreground">
-        <span>
-          Карточка {index + 1} из {words.length}
-        </span>
+      <div className="flex items-center justify-between text-base font-bold text-[#777]">
+        <span>Карточка {index + 1} из {words.length}</span>
         <span className="flex items-center gap-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="h-8 gap-1 text-xs"
+          <button
             onClick={() => setShowTranscription(!showTranscription)}
+            className="flex items-center gap-1 text-sm font-bold text-[#1cb0f6] hover:underline"
           >
-            {showTranscription ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+            {showTranscription ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             Транскрипция
-          </Button>
-          <span className="text-emerald-600 font-medium">{knownCount} изучено</span>
+          </button>
+          <span className="text-[#58cc02]">✓ {knownCount}</span>
         </span>
       </div>
 
-      <div className="h-2 w-full rounded-full bg-muted overflow-hidden">
+      <div className="h-3 w-full rounded-full bg-[#e5e5e5] overflow-hidden">
         <motion.div
-          className="h-full bg-primary"
+          className="h-full bg-[#58cc02] rounded-full"
           animate={{ width: `${(index / words.length) * 100}%` }}
           transition={{ type: 'spring', stiffness: 100 }}
         />
       </div>
 
       {/* Card */}
-      <div className="relative h-80 cursor-pointer perspective-1000" onClick={() => setFlipped(!flipped)}>
+      <div
+        className="relative h-80 md:h-96 cursor-pointer"
+        onClick={() => setFlipped(!flipped)}
+      >
         <AnimatePresence mode="wait">
           <motion.div
             key={word.id + (flipped ? '-back' : '-front')}
@@ -133,24 +136,28 @@ export function FlashcardDeck({ words }: FlashcardDeckProps) {
             transition={{ duration: 0.3 }}
             className="absolute inset-0"
           >
-            <Card className="h-full flex flex-col items-center justify-center text-center border-2 hover:border-primary/30 transition-colors">
-              <CardContent className="pt-6 space-y-4">
+            <Card className="h-full flex flex-col items-center justify-center text-center border-2 border-[#e5e5e5] shadow-none hover:border-[#58cc02]/30 transition-colors">
+              <CardContent className="pt-6 space-y-5">
                 {!flipped ? (
                   <>
-                    <Badge variant="secondary" className="text-xs">{word.category}</Badge>
-                    <h2 className="text-4xl font-bold tracking-tight">{word.english}</h2>
+                    <Badge className="text-sm font-bold px-3 py-1 bg-[#f7f9fc] text-[#777] border-none">
+                      {word.category}
+                    </Badge>
+                    <h2 className="text-5xl md:text-6xl font-extrabold text-[#3f3f3f]">{word.english}</h2>
                     {showTranscription && word.transcription && (
-                      <p className="text-lg text-muted-foreground font-mono">{word.transcription}</p>
+                      <p className="text-xl text-[#777] font-mono font-bold">{word.transcription}</p>
                     )}
-                    <p className="text-sm text-muted-foreground">Нажмите, чтобы перевернуть</p>
+                    <p className="text-base font-bold text-[#777]">Нажми, чтобы перевернуть</p>
                   </>
                 ) : (
                   <>
-                    <h2 className="text-3xl font-bold">{word.russian}</h2>
+                    <h2 className="text-4xl md:text-5xl font-extrabold text-[#58cc02]">{word.russian}</h2>
                     {word.example && (
-                      <p className="text-muted-foreground italic max-w-md">&ldquo;{word.example}&rdquo;</p>
+                      <p className="text-lg text-[#777] font-bold italic max-w-md">
+                        &ldquo;{word.example}&rdquo;
+                      </p>
                     )}
-                    <p className="text-sm text-muted-foreground">Нажмите, чтобы перевернуть</p>
+                    <p className="text-base font-bold text-[#777]">Нажми, чтобы перевернуть</p>
                   </>
                 )}
               </CardContent>
@@ -161,23 +168,40 @@ export function FlashcardDeck({ words }: FlashcardDeckProps) {
 
       {/* Controls */}
       <div className="flex items-center justify-between gap-4">
-        <Button variant="outline" size="icon" onClick={handlePrev} disabled={isFirst}>
-          <ChevronLeft className="h-4 w-4" />
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={handlePrev}
+          disabled={isFirst}
+          className="h-14 w-14 rounded-xl border-2 text-[#777]"
+        >
+          <ChevronLeft className="h-6 w-6" />
         </Button>
 
         <div className="flex gap-3">
-          <Button variant="outline" className="gap-2 border-red-200 hover:bg-red-50 hover:text-red-600" onClick={handleUnknown}>
-            <RotateCw className="h-4 w-4" />
+          <Button
+            variant="outline"
+            className="gap-2 text-base font-bold h-14 px-6 rounded-xl border-2 border-[#ff4b4b]/30 text-[#ff4b4b] hover:bg-[#ff4b4b]/10 hover:text-[#ff4b4b]"
+            onClick={handleUnknown}
+          >
             Повторить
           </Button>
-          <Button className="gap-2 bg-emerald-600 hover:bg-emerald-700" onClick={handleKnown}>
-            <Volume2 className="h-4 w-4" />
+          <Button
+            className="gap-2 text-lg font-extrabold h-14 px-8 rounded-xl bg-[#58cc02] hover:bg-[#4caf50] text-white shadow-[0_4px_0_#45a005] hover:shadow-[0_2px_0_#45a005] hover:translate-y-[2px] transition-all"
+            onClick={handleKnown}
+          >
             Знаю
           </Button>
         </div>
 
-        <Button variant="outline" size="icon" onClick={handleNext} disabled={isLast}>
-          <ChevronRight className="h-4 w-4" />
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={handleNext}
+          disabled={isLast}
+          className="h-14 w-14 rounded-xl border-2 text-[#777]"
+        >
+          <ChevronRight className="h-6 w-6" />
         </Button>
       </div>
     </div>

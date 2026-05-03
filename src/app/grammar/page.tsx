@@ -1,8 +1,6 @@
 import Link from 'next/link';
 import { getTopics } from '@/lib/data';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { ArrowRight, BookOpen, Clock, History, Rocket, Activity, Text, Key, GitBranch } from 'lucide-react';
+import { BookOpen, Clock, History, Rocket, Activity, Text, Key, GitBranch } from 'lucide-react';
 
 const iconMap: Record<string, React.ElementType> = {
   BookOpen,
@@ -15,48 +13,45 @@ const iconMap: Record<string, React.ElementType> = {
   GitBranch,
 };
 
+const topicColors = [
+  { bg: 'bg-[#ff4b4b]', border: 'border-[#ff4b4b]', light: 'bg-[#ff4b4b]/10', text: 'text-[#ff4b4b]' },
+  { bg: 'bg-[#1cb0f6]', border: 'border-[#1cb0f6]', light: 'bg-[#1cb0f6]/10', text: 'text-[#1cb0f6]' },
+  { bg: 'bg-[#58cc02]', border: 'border-[#58cc02]', light: 'bg-[#58cc02]/10', text: 'text-[#58cc02]' },
+  { bg: 'bg-[#ffc800]', border: 'border-[#ffc800]', light: 'bg-[#ffc800]/10', text: 'text-[#cc9e00]' },
+  { bg: 'bg-[#ce82ff]', border: 'border-[#ce82ff]', light: 'bg-[#ce82ff]/10', text: 'text-[#ce82ff]' },
+  { bg: 'bg-[#ff9600]', border: 'border-[#ff9600]', light: 'bg-[#ff9600]/10', text: 'text-[#ff9600]' },
+  { bg: 'bg-[#00d4aa]', border: 'border-[#00d4aa]', light: 'bg-[#00d4aa]/10', text: 'text-[#00a884]' },
+];
+
 export default async function GrammarPage() {
   const topics = await getTopics();
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-12">
-      <div className="mb-10">
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">Грамматика</h1>
-        <p className="text-muted-foreground max-w-2xl">
-          Выберите тему для изучения теории и выполнения упражнений. Каждая тема содержит 
-          объяснения с примерами и практические задания.
-        </p>
-      </div>
+    <div className="mx-auto max-w-3xl px-4 py-10 md:py-14">
+      <h1 className="text-3xl md:text-4xl font-extrabold text-[#3f3f3f] mb-8 text-center">
+        Грамматика
+      </h1>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {topics.map((topic) => {
+      <div className="space-y-4">
+        {topics.map((topic, i) => {
           const Icon = iconMap[topic.icon] || BookOpen;
+          const color = topicColors[i % topicColors.length];
           return (
             <Link key={topic.id} href={`/grammar/${topic.slug}`}>
-              <Card className="h-full transition-all hover:shadow-md hover:-translate-y-0.5 group">
-                <CardHeader className="pb-3">
-                  <div className="flex items-start justify-between">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <Badge variant="secondary" className="text-xs">
-                      {topic._count.lessons} уроков
-                    </Badge>
+              <div className="flex items-center gap-4 rounded-2xl border-2 border-[#e5e5e5] bg-white p-5 transition-all hover:border-[#58cc02] hover:shadow-md">
+                <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-xl ${color.bg} text-white`}>
+                  <Icon className="h-7 w-7" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-xl font-extrabold text-[#3f3f3f]">{topic.title}</div>
+                  <div className="text-base font-bold text-[#777] mt-0.5">
+                    {topic._count.lessons} уроков
                   </div>
-                  <CardTitle className="text-lg mt-3 group-hover:text-primary transition-colors">
-                    {topic.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="line-clamp-2">
-                    {topic.description}
-                  </CardDescription>
-                  <div className="mt-4 flex items-center text-sm font-medium text-primary">
-                    Перейти к теме
-                    <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </div>
-                </CardContent>
-              </Card>
+                </div>
+                <div className={`rounded-lg px-3 py-1 text-sm font-bold ${color.light} ${color.text}`}>
+                  Учить
+                </div>
+              </div>
             </Link>
           );
         })}

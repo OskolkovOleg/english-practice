@@ -46,7 +46,7 @@ export function ExercisePlayer({ exercises }: ExercisePlayerProps) {
 
   if (exercises.length === 0) {
     return (
-      <div className="text-center py-12 text-muted-foreground">
+      <div className="text-center py-12 text-[#777] text-lg font-bold">
         В этом уроке пока нет упражнений.
       </div>
     );
@@ -68,7 +68,7 @@ export function ExercisePlayer({ exercises }: ExercisePlayerProps) {
       setCompleted((c) => ({ ...c, [exercise.id]: true }));
       toast.success('Правильно!', { description: exercise.explanation || 'Отличная работа!' });
     } else {
-      toast.error('Неправильно', { description: 'Попробуйте ещё раз или посмотрите подсказку.' });
+      toast.error('Неправильно', { description: 'Попробуй ещё раз или посмотри подсказку.' });
     }
   };
 
@@ -99,37 +99,38 @@ export function ExercisePlayer({ exercises }: ExercisePlayerProps) {
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="text-center py-12"
+        className="text-center py-16"
       >
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 mb-4">
-          <Trophy className="h-8 w-8" />
+        <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[#58cc02]/20 text-[#58cc02] mb-6">
+          <Trophy className="h-10 w-10" />
         </div>
-        <h3 className="text-2xl font-bold mb-2">Урок пройден!</h3>
-        <p className="text-muted-foreground mb-6">
-          Вы решили {stats.correct} из {stats.total} заданий правильно.
+        <h3 className="text-3xl font-extrabold text-[#3f3f3f] mb-3">Урок пройден!</h3>
+        <p className="text-lg text-[#777] font-bold mb-8">
+          {stats.correct} из {stats.total} правильно
         </p>
-        <Button onClick={handleRestart} variant="outline" className="gap-2">
-          <RotateCcw className="h-4 w-4" />
+        <Button onClick={handleRestart} variant="outline" className="gap-2 text-base font-bold h-12 px-6">
+          <RotateCcw className="h-5 w-5" />
           Пройти снова
         </Button>
       </motion.div>
     );
   }
 
+  const typeLabel =
+    exercise.type === 'translation' ? 'Перевод' :
+    exercise.type === 'quiz' ? 'Тест' :
+    exercise.type === 'fillblank' ? 'Пропуск' : 'Задание';
+
   return (
     <div className="space-y-6">
       {/* Progress */}
-      <div className="flex items-center justify-between text-sm text-muted-foreground">
-        <span>
-          Задание {currentIndex + 1} из {exercises.length}
-        </span>
-        <span>
-          Правильно: {stats.correct} / {stats.total}
-        </span>
+      <div className="flex items-center justify-between text-base font-bold text-[#777]">
+        <span>Задание {currentIndex + 1} из {exercises.length}</span>
+        <span className="text-[#58cc02]">✓ {stats.correct}</span>
       </div>
-      <div className="h-2 w-full rounded-full bg-muted overflow-hidden">
+      <div className="h-3 w-full rounded-full bg-[#e5e5e5] overflow-hidden">
         <motion.div
-          className="h-full bg-primary"
+          className="h-full bg-[#58cc02] rounded-full"
           initial={{ width: 0 }}
           animate={{ width: `${((currentIndex + (showResult === 'correct' ? 1 : 0)) / exercises.length) * 100}%` }}
           transition={{ type: 'spring', stiffness: 100 }}
@@ -144,35 +145,33 @@ export function ExercisePlayer({ exercises }: ExercisePlayerProps) {
           exit={{ opacity: 0, x: -20 }}
           transition={{ duration: 0.25 }}
         >
-          <Card>
-            <CardHeader className="pb-3">
+          <Card className="border-2 border-[#e5e5e5] shadow-none">
+            <CardHeader className="pb-4">
               <div className="flex items-center justify-between">
-                <Badge variant="outline" className="text-xs">
-                  {exercise.type === 'translation' && 'Перевод'}
-                  {exercise.type === 'quiz' && 'Тест'}
-                  {exercise.type === 'fillblank' && 'Пропуск'}
+                <Badge className="text-sm font-bold px-3 py-1 bg-[#f7f9fc] text-[#777] border-none">
+                  {typeLabel}
                 </Badge>
-                <div className="flex gap-1">
+                <div className="flex gap-1.5">
                   {Array.from({ length: exercise.difficulty }).map((_, i) => (
-                    <div key={i} className="w-2 h-2 rounded-full bg-amber-400" />
+                    <div key={i} className="w-3 h-3 rounded-full bg-[#ffc800]" />
                   ))}
                 </div>
               </div>
-              <CardTitle className="text-xl mt-3 font-medium leading-relaxed">
+              <CardTitle className="text-2xl md:text-3xl font-extrabold text-[#3f3f3f] mt-4 leading-snug">
                 {exercise.question}
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-5">
               {options ? (
-                <div className="grid gap-2">
+                <div className="grid gap-3">
                   {options.map((opt: string) => (
                     <button
                       key={opt}
                       onClick={() => setUserAnswer(opt)}
-                      className={`text-left rounded-lg border px-4 py-3 text-sm transition-all ${
+                      className={`text-left rounded-xl border-2 px-5 py-4 text-lg font-bold transition-all ${
                         userAnswer === opt
-                          ? 'border-primary bg-primary/5 text-primary font-medium'
-                          : 'border-border hover:border-primary/50 hover:bg-accent'
+                          ? 'border-[#1cb0f6] bg-[#1cb0f6]/10 text-[#1cb0f6]'
+                          : 'border-[#e5e5e5] hover:border-[#1cb0f6]/50 hover:bg-[#f7f9fc] text-[#3f3f3f]'
                       }`}
                     >
                       {opt}
@@ -181,22 +180,22 @@ export function ExercisePlayer({ exercises }: ExercisePlayerProps) {
                 </div>
               ) : (
                 <Input
-                  placeholder="Введите ваш ответ..."
+                  placeholder="Введи ответ..."
                   value={userAnswer}
                   onChange={(e) => setUserAnswer(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && showResult === 'idle' && handleCheck()}
                   disabled={showResult !== 'idle'}
-                  className="text-base"
+                  className="text-lg font-bold h-14 rounded-xl border-2 border-[#e5e5e5] focus:border-[#58cc02] focus:ring-[#58cc02]"
                 />
               )}
 
               {exercise.hint && (
                 <button
                   onClick={() => setShowHint(!showHint)}
-                  className="flex items-center gap-1 text-xs text-amber-600 hover:underline"
+                  className="flex items-center gap-1.5 text-base font-bold text-[#ffc800] hover:underline"
                 >
-                  <Lightbulb className="h-3.5 w-3.5" />
-                  {showHint ? 'Скрыть подсказку' : 'Показать подсказку'}
+                  <Lightbulb className="h-5 w-5" />
+                  {showHint ? 'Скрыть подсказку' : 'Подсказка'}
                 </button>
               )}
 
@@ -206,9 +205,9 @@ export function ExercisePlayer({ exercises }: ExercisePlayerProps) {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
-                    className="rounded-lg bg-amber-50 border border-amber-200 px-4 py-3 text-sm text-amber-800"
+                    className="rounded-xl bg-[#ffc800]/15 border-2 border-[#ffc800]/30 px-5 py-4 text-base font-bold text-[#cc9e00]"
                   >
-                    <span className="font-medium">Подсказка:</span> {exercise.hint}
+                    💡 {exercise.hint}
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -217,16 +216,18 @@ export function ExercisePlayer({ exercises }: ExercisePlayerProps) {
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700"
+                  className="rounded-xl bg-[#ff4b4b]/10 border-2 border-[#ff4b4b]/30 px-5 py-4"
                 >
-                  <div className="flex items-start gap-2">
-                    <XCircle className="h-5 w-5 shrink-0 mt-0.5" />
+                  <div className="flex items-start gap-3">
+                    <XCircle className="h-6 w-6 shrink-0 mt-0.5 text-[#ff4b4b]" />
                     <div>
-                      <p className="font-medium">Неправильно</p>
-                      <p className="mt-1">
-                        Правильный ответ: <span className="font-semibold">{exercise.correctAnswer}</span>
+                      <p className="font-extrabold text-[#ff4b4b] text-lg">Неправильно</p>
+                      <p className="mt-1 text-base font-bold text-[#3f3f3f]">
+                        Правильно: <span className="text-[#58cc02]">{exercise.correctAnswer}</span>
                       </p>
-                      {exercise.explanation && <p className="mt-1 text-red-600/80">{exercise.explanation}</p>}
+                      {exercise.explanation && (
+                        <p className="mt-1 text-base font-bold text-[#777]">{exercise.explanation}</p>
+                      )}
                     </div>
                   </div>
                 </motion.div>
@@ -236,33 +237,46 @@ export function ExercisePlayer({ exercises }: ExercisePlayerProps) {
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="rounded-lg bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm text-emerald-700"
+                  className="rounded-xl bg-[#58cc02]/10 border-2 border-[#58cc02]/30 px-5 py-4"
                 >
-                  <div className="flex items-start gap-2">
-                    <CheckCircle2 className="h-5 w-5 shrink-0 mt-0.5" />
+                  <div className="flex items-start gap-3">
+                    <CheckCircle2 className="h-6 w-6 shrink-0 mt-0.5 text-[#58cc02]" />
                     <div>
-                      <p className="font-medium">Правильно!</p>
-                      {exercise.explanation && <p className="mt-1 text-emerald-600/80">{exercise.explanation}</p>}
+                      <p className="font-extrabold text-[#58cc02] text-lg">Правильно!</p>
+                      {exercise.explanation && (
+                        <p className="mt-1 text-base font-bold text-[#3f3f3f]">{exercise.explanation}</p>
+                      )}
                     </div>
                   </div>
                 </motion.div>
               )}
 
-              <div className="flex gap-2 pt-2">
+              <div className="flex gap-3 pt-2">
                 {showResult === 'idle' ? (
-                  <Button onClick={handleCheck} disabled={!userAnswer.trim()} className="gap-2">
-                    <CheckCircle2 className="h-4 w-4" />
+                  <Button
+                    onClick={handleCheck}
+                    disabled={!userAnswer.trim()}
+                    className="gap-2 text-lg font-extrabold h-14 px-8 rounded-xl bg-[#58cc02] hover:bg-[#4caf50] shadow-[0_4px_0_#45a005] hover:shadow-[0_2px_0_#45a005] hover:translate-y-[2px] transition-all"
+                  >
+                    <CheckCircle2 className="h-5 w-5" />
                     Проверить
                   </Button>
                 ) : (
-                  <Button onClick={handleNext} className="gap-2">
+                  <Button
+                    onClick={handleNext}
+                    className="gap-2 text-lg font-extrabold h-14 px-8 rounded-xl bg-[#58cc02] hover:bg-[#4caf50] shadow-[0_4px_0_#45a005] hover:shadow-[0_2px_0_#45a005] hover:translate-y-[2px] transition-all"
+                  >
                     {isLast ? 'Завершить' : 'Далее'}
-                    <ChevronRight className="h-4 w-4" />
+                    <ChevronRight className="h-5 w-5" />
                   </Button>
                 )}
                 {showResult === 'wrong' && (
-                  <Button variant="outline" onClick={() => { setShowResult('idle'); setUserAnswer(''); }}>
-                    Попробовать снова
+                  <Button
+                    variant="outline"
+                    onClick={() => { setShowResult('idle'); setUserAnswer(''); }}
+                    className="text-base font-bold h-14 px-6 rounded-xl border-2"
+                  >
+                    Ещё раз
                   </Button>
                 )}
               </div>
