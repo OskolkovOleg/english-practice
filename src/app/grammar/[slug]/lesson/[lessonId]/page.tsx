@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getLessonById, getTopicBySlug } from '@/lib/data';
+import { getLessonById, getTopicBySlug, getLessonMarkdown } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ArrowLeft, BookOpen, PenTool } from 'lucide-react';
 import { ExercisePlayer } from '@/components/exercise-player';
+import { MarkdownRenderer } from '@/components/markdown-renderer';
 
 interface Props {
   params: Promise<{ slug: string; lessonId: string }>;
@@ -19,6 +20,8 @@ export default async function LessonPage({ params }: Props) {
   ]);
 
   if (!topic || !lesson || lesson.topicId !== topic.id) return notFound();
+
+  const markdown = getLessonMarkdown(slug);
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 md:py-14">
@@ -59,10 +62,13 @@ export default async function LessonPage({ params }: Props) {
         <TabsContent value="theory">
           <Card className="border-2 border-[#e5e5e5] shadow-none">
             <CardContent className="pt-8 pb-8">
-              <div
-                className="space-y-6 text-lg leading-relaxed text-[#3f3f3f]"
-                dangerouslySetInnerHTML={{ __html: lesson.content }}
-              />
+              {markdown ? (
+                <MarkdownRenderer content={markdown} />
+              ) : (
+                <div className="text-lg text-[#777] font-bold">
+                  Теория для этой темы пока не добавлена.
+                </div>
+              )}
             </CardContent>
           </Card>
         </TabsContent>

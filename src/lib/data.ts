@@ -1,4 +1,6 @@
 import { prisma } from './prisma';
+import fs from 'fs';
+import path from 'path';
 
 export async function getTopics() {
   return prisma.topic.findMany({
@@ -82,4 +84,12 @@ export async function getExerciseStats() {
   const totalTopics = await prisma.topic.count();
   
   return { totalExercises, totalWords, totalTopics };
+}
+
+export function getLessonMarkdown(slug: string): string {
+  const filePath = path.join(process.cwd(), 'content', 'grammar', `${slug}.md`);
+  if (fs.existsSync(filePath)) {
+    return fs.readFileSync(filePath, 'utf-8');
+  }
+  return '';
 }
