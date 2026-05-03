@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { BookOpen, Brain, Layers, Home, Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import { ProgressHeader } from './progress-header';
 
 const navItems = [
   { href: '/', label: 'Главная', icon: Home },
@@ -52,6 +53,8 @@ export function Navbar() {
             );
           })}
         </nav>
+
+        <ProgressHeader />
 
         {/* Mobile toggle */}
         <button

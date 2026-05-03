@@ -1,9 +1,17 @@
 import Link from 'next/link';
-import { BookOpen, Brain, Layers } from 'lucide-react';
-import { getExerciseStats } from '@/lib/data';
+import { BookOpen, Brain, Layers, Flame, Star } from 'lucide-react';
+import { getExerciseStats, getProgressSummary } from '@/lib/data';
 
 export default async function HomePage() {
   const stats = await getExerciseStats();
+  const progress = await getProgressSummary();
+
+  const exercisePct = progress.totalExercises > 0
+    ? Math.round((progress.exerciseProgress / progress.totalExercises) * 100)
+    : 0;
+  const wordPct = progress.totalWords > 0
+    ? Math.round((progress.wordProgress / progress.totalWords) * 100)
+    : 0;
 
   const sections = [
     {
@@ -49,6 +57,48 @@ export default async function HomePage() {
         <p className="text-2xl text-[#777]">
           Выбери, чем хочешь заняться
         </p>
+      </div>
+
+      {/* Stats cards */}
+      <div className="grid grid-cols-2 gap-4 mb-8">
+        <div className="rounded-2xl border-2 border-[#e5e5e5] bg-white p-5">
+          <div className="flex items-center gap-2 text-[#ff9600] font-extrabold text-lg mb-2">
+            <Flame className="h-5 w-5" />
+            {progress.stats.streak} дней
+          </div>
+          <div className="text-base text-[#777] font-bold">Серия занятий</div>
+        </div>
+        <div className="rounded-2xl border-2 border-[#e5e5e5] bg-white p-5">
+          <div className="flex items-center gap-2 text-[#58cc02] font-extrabold text-lg mb-2">
+            <Star className="h-5 w-5" />
+            {progress.stats.totalXP} XP
+          </div>
+          <div className="text-base text-[#777] font-bold">Уровень {progress.stats.level}</div>
+        </div>
+      </div>
+
+      {/* Progress bars */}
+      <div className="space-y-4 mb-8">
+        <div className="rounded-2xl border-2 border-[#e5e5e5] bg-white p-5">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-lg font-extrabold text-[#3f3f3f]">Грамматика</span>
+            <span className="text-base font-bold text-[#777]">{progress.exerciseProgress} / {progress.totalExercises}</span>
+          </div>
+          <div className="h-4 w-full rounded-full bg-[#e5e5e5] overflow-hidden">
+            <div className="h-full bg-[#58cc02] rounded-full transition-all" style={{ width: `${exercisePct}%` }} />
+          </div>
+          <div className="text-right text-sm font-bold text-[#777] mt-1">{exercisePct}%</div>
+        </div>
+        <div className="rounded-2xl border-2 border-[#e5e5e5] bg-white p-5">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-lg font-extrabold text-[#3f3f3f]">Слова</span>
+            <span className="text-base font-bold text-[#777]">{progress.wordProgress} / {progress.totalWords}</span>
+          </div>
+          <div className="h-4 w-full rounded-full bg-[#e5e5e5] overflow-hidden">
+            <div className="h-full bg-[#ffc800] rounded-full transition-all" style={{ width: `${wordPct}%` }} />
+          </div>
+          <div className="text-right text-sm font-bold text-[#777] mt-1">{wordPct}%</div>
+        </div>
       </div>
 
       {/* Big colorful buttons */}

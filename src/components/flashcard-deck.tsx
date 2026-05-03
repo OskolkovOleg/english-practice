@@ -57,6 +57,16 @@ export function FlashcardDeck({ words }: FlashcardDeckProps) {
   const handleKnown = () => {
     setKnown((k) => ({ ...k, [word.id]: true }));
     toast.success('Запомнено!');
+    fetch('/api/progress', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: 'word', entityId: word.id, completed: true, score: 5 }),
+    });
+    fetch('/api/stats', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ xp: 5 }),
+    });
     handleNext();
   };
 

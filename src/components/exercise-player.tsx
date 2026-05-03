@@ -134,6 +134,17 @@ export function ExercisePlayer({ exercises }: ExercisePlayerProps) {
     if (correct) {
       setCompleted((c) => ({ ...c, [exercise.id]: true }));
       toast.success('Правильно!', { description: exercise.explanation || 'Отличная работа!' });
+      // Save progress
+      fetch('/api/progress', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'exercise', entityId: exercise.id, completed: true, score: 10 }),
+      });
+      fetch('/api/stats', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ xp: 10 }),
+      });
     } else {
       toast.error('Неправильно', { description: 'Попробуй ещё раз или посмотри подсказку.' });
     }

@@ -93,3 +93,29 @@ export function getLessonMarkdown(slug: string): string {
   }
   return '';
 }
+
+export async function getUserStats() {
+  let stats = await prisma.userStats.findFirst();
+  if (!stats) {
+    stats = await prisma.userStats.create({ data: {} });
+  }
+  return stats;
+}
+
+export async function getProgressSummary() {
+  const [exerciseProgress, wordProgress, stats, totalExercises, totalWords] = await Promise.all([
+    prisma.userProgress.count({ where: { type: 'exercise', completed: true } }),
+    prisma.userProgress.count({ where: { type: 'word', completed: true } }),
+    getUserStats(),
+    prisma.exercise.count(),
+    prisma.word.count(),
+  ]);
+
+  return {
+    exerciseProgress,
+    wordProgress,
+    totalExercises,
+    totalWords,
+    stats,
+  };
+}
