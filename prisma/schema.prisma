@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Topic {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  description String
+  icon        String   @default("BookOpen")
+  order       Int      @default(0)
+  lessons     Lesson[]
+  createdAt   DateTime @default(now())
+}
+
+model Lesson {
+  id        String     @id @default(uuid())
+  title     String
+  content   String     // Markdown/HTML content for theory
+  order     Int        @default(0)
+  topicId   String
+  topic     Topic      @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  exercises Exercise[]
+  createdAt DateTime   @default(now())
+}
+
+model Exercise {
+  id            String   @id @default(uuid())
+  type          String   // "translation", "quiz", "fillblank", "word_match"
+  question      String
+  correctAnswer String
+  options       String?  // JSON array for quiz options
+  hint          String?
+  explanation   String?
+  difficulty    Int      @default(1) // 1-3
+  lessonId      String
+  lesson        Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  createdAt     DateTime @default(now())
+}
+
+model Word {
+  id         String   @id @default(uuid())
+  english    String
+  russian    String
+  transcription String?
+  example    String?
+  category   String   @default("general")
+  difficulty Int      @default(1)
+  createdAt  DateTime @default(now())
+}
+
+model UserProgress {
+  id          String   @id @default(uuid())
+  exerciseId  String?
+  wordId      String?
+  completed   Boolean  @default(false)
+  score       Int      @default(0)
+  attempts    Int      @default(0)
+  updatedAt   DateTime @updatedAt
+}
