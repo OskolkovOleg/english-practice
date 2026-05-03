@@ -24,7 +24,7 @@ export default async function LessonPage({ params }: Props) {
   const markdown = getLessonMarkdown(slug);
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 md:py-14">
+    <div className="mx-auto max-w-5xl px-4 py-10 md:py-14">
       <Link href={`/grammar/${slug}`}>
         <Button
           variant="ghost"

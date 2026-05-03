@@ -15,7 +15,7 @@ export default async function TopicPage({ params }: Props) {
   if (!topic) return notFound();
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 md:py-14">
+    <div className="mx-auto max-w-5xl px-4 py-10 md:py-14">
       <Link href="/grammar">
         <Button variant="ghost" size="sm" className="mb-6 -ml-2 gap-1 text-[#777] hover:text-[#3f3f3f] text-base font-bold">
           <ArrowLeft className="h-5 w-5" />

@@ -40,7 +40,7 @@ export default async function HomePage() {
   ];
 
   return (
-    <div className="mx-auto max-w-xl px-4 py-10 md:py-16">
+    <div className="mx-auto max-w-3xl px-4 py-10 md:py-16">
       {/* Heading */}
       <div className="text-center mb-12">
         <h1 className="text-5xl md:text-6xl font-extrabold text-[#3f3f3f] mb-4">
