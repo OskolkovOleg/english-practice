@@ -20,9 +20,9 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-[#e5e5e5]">
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4">
-        <Link href="/" className="flex items-center gap-2 text-2xl font-extrabold tracking-tight text-[#58cc02]">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#58cc02] text-white shadow-sm">
-            <BookOpen className="h-5 w-5" />
+        <Link href="/" className="flex items-center gap-2 text-3xl font-extrabold tracking-tight text-[#58cc02]">
+          <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#58cc02] text-white shadow-sm">
+            <BookOpen className="h-6 w-6" />
           </span>
           EnglishFlow
         </Link>
@@ -35,7 +35,7 @@ export function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`relative flex items-center gap-2 rounded-xl px-4 py-2 text-base font-bold transition-colors ${
+                className={`relative flex items-center gap-2 rounded-xl px-4 py-2 text-lg font-bold transition-colors ${
                   isActive ? 'text-[#58cc02]' : 'text-[#777] hover:text-[#3f3f3f]'
                 }`}
               >
@@ -76,7 +76,7 @@ export function Navbar() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
-                className={`flex items-center gap-3 rounded-xl px-4 py-3 text-base font-bold ${
+                className={`flex items-center gap-3 rounded-xl px-4 py-3 text-lg font-bold ${
                   isActive ? 'bg-[#58cc02]/10 text-[#58cc02]' : 'text-[#777] hover:bg-[#f7f9fc]'
                 }`}
               >

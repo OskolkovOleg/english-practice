@@ -30,7 +30,7 @@ export function FlashcardDeck({ words }: FlashcardDeckProps) {
 
   if (words.length === 0) {
     return (
-      <div className="text-center py-12 text-[#777] text-lg font-bold">
+      <div className="text-center py-12 text-[#777] text-xl font-bold">
         Слов пока нет.
       </div>
     );
@@ -81,16 +81,16 @@ export function FlashcardDeck({ words }: FlashcardDeckProps) {
         className="text-center py-16"
       >
         <div className="text-7xl mb-6">🎉</div>
-        <h3 className="text-3xl font-extrabold text-[#3f3f3f] mb-3">Сессия завершена!</h3>
-        <p className="text-lg text-[#777] font-bold mb-8">
+        <h3 className="text-4xl font-extrabold text-[#3f3f3f] mb-3">Сессия завершена!</h3>
+        <p className="text-xl text-[#777] font-bold mb-8">
           Знаешь {knownCount} из {words.length} слов
         </p>
         <Button
           onClick={handleRestart}
           variant="outline"
-          className="gap-2 text-base font-bold h-12 px-6 rounded-xl border-2"
+          className="gap-2 text-lg font-bold h-14 px-8 rounded-xl border-2"
         >
-          <RotateCw className="h-5 w-5" />
+          <RotateCw className="h-6 w-6" />
           Начать заново
         </Button>
       </motion.div>
@@ -100,14 +100,14 @@ export function FlashcardDeck({ words }: FlashcardDeckProps) {
   return (
     <div className="space-y-6">
       {/* Stats */}
-      <div className="flex items-center justify-between text-base font-bold text-[#777]">
+      <div className="flex items-center justify-between text-lg font-bold text-[#777]">
         <span>Карточка {index + 1} из {words.length}</span>
         <span className="flex items-center gap-2">
           <button
             onClick={() => setShowTranscription(!showTranscription)}
-            className="flex items-center gap-1 text-sm font-bold text-[#1cb0f6] hover:underline"
+            className="flex items-center gap-1 text-base font-bold text-[#1cb0f6] hover:underline"
           >
-            {showTranscription ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            {showTranscription ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
             Транскрипция
           </button>
           <span className="text-[#58cc02]">✓ {knownCount}</span>
@@ -140,24 +140,24 @@ export function FlashcardDeck({ words }: FlashcardDeckProps) {
               <CardContent className="pt-6 space-y-5">
                 {!flipped ? (
                   <>
-                    <Badge className="text-sm font-bold px-3 py-1 bg-[#f7f9fc] text-[#777] border-none">
+                    <Badge className="text-base font-bold px-4 py-1.5 bg-[#f7f9fc] text-[#777] border-none">
                       {word.category}
                     </Badge>
-                    <h2 className="text-5xl md:text-6xl font-extrabold text-[#3f3f3f]">{word.english}</h2>
+                    <h2 className="text-6xl md:text-7xl font-extrabold text-[#3f3f3f]">{word.english}</h2>
                     {showTranscription && word.transcription && (
-                      <p className="text-xl text-[#777] font-mono font-bold">{word.transcription}</p>
+                      <p className="text-2xl text-[#777] font-mono font-bold">{word.transcription}</p>
                     )}
-                    <p className="text-base font-bold text-[#777]">Нажми, чтобы перевернуть</p>
+                    <p className="text-lg font-bold text-[#777]">Нажми, чтобы перевернуть</p>
                   </>
                 ) : (
                   <>
-                    <h2 className="text-4xl md:text-5xl font-extrabold text-[#58cc02]">{word.russian}</h2>
+                    <h2 className="text-5xl md:text-6xl font-extrabold text-[#58cc02]">{word.russian}</h2>
                     {word.example && (
-                      <p className="text-lg text-[#777] font-bold italic max-w-md">
+                      <p className="text-xl text-[#777] font-bold italic max-w-md">
                         &ldquo;{word.example}&rdquo;
                       </p>
                     )}
-                    <p className="text-base font-bold text-[#777]">Нажми, чтобы перевернуть</p>
+                    <p className="text-lg font-bold text-[#777]">Нажми, чтобы перевернуть</p>
                   </>
                 )}
               </CardContent>
@@ -173,21 +173,21 @@ export function FlashcardDeck({ words }: FlashcardDeckProps) {
           size="icon"
           onClick={handlePrev}
           disabled={isFirst}
-          className="h-14 w-14 rounded-xl border-2 text-[#777]"
+          className="h-16 w-16 rounded-xl border-2 text-[#777]"
         >
-          <ChevronLeft className="h-6 w-6" />
+          <ChevronLeft className="h-7 w-7" />
         </Button>
 
         <div className="flex gap-3">
           <Button
             variant="outline"
-            className="gap-2 text-base font-bold h-14 px-6 rounded-xl border-2 border-[#ff4b4b]/30 text-[#ff4b4b] hover:bg-[#ff4b4b]/10 hover:text-[#ff4b4b]"
+            className="gap-2 text-lg font-bold h-16 px-8 rounded-xl border-2 border-[#ff4b4b]/30 text-[#ff4b4b] hover:bg-[#ff4b4b]/10 hover:text-[#ff4b4b]"
             onClick={handleUnknown}
           >
             Повторить
           </Button>
           <Button
-            className="gap-2 text-lg font-extrabold h-14 px-8 rounded-xl bg-[#58cc02] hover:bg-[#4caf50] text-white shadow-[0_4px_0_#45a005] hover:shadow-[0_2px_0_#45a005] hover:translate-y-[2px] transition-all"
+            className="gap-2 text-xl font-extrabold h-16 px-10 rounded-xl bg-[#58cc02] hover:bg-[#4caf50] text-white shadow-[0_4px_0_#45a005] hover:shadow-[0_2px_0_#45a005] hover:translate-y-[2px] transition-all"
             onClick={handleKnown}
           >
             Знаю
@@ -199,9 +199,9 @@ export function FlashcardDeck({ words }: FlashcardDeckProps) {
           size="icon"
           onClick={handleNext}
           disabled={isLast}
-          className="h-14 w-14 rounded-xl border-2 text-[#777]"
+          className="h-16 w-16 rounded-xl border-2 text-[#777]"
         >
-          <ChevronRight className="h-6 w-6" />
+          <ChevronRight className="h-7 w-7" />
         </Button>
       </div>
     </div>

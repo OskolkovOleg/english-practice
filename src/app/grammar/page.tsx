@@ -28,7 +28,7 @@ export default async function GrammarPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 md:py-14">
-      <h1 className="text-3xl md:text-4xl font-extrabold text-[#3f3f3f] mb-8 text-center">
+      <h1 className="text-4xl md:text-5xl font-extrabold text-[#3f3f3f] mb-8 text-center">
         Грамматика
       </h1>
 

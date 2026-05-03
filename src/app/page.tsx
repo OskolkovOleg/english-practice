@@ -43,10 +43,10 @@ export default async function HomePage() {
     <div className="mx-auto max-w-xl px-4 py-10 md:py-16">
       {/* Heading */}
       <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-[#3f3f3f] mb-4">
+        <h1 className="text-5xl md:text-6xl font-extrabold text-[#3f3f3f] mb-4">
           Учим английский
         </h1>
-        <p className="text-xl text-[#777]">
+        <p className="text-2xl text-[#777]">
           Выбери, чем хочешь заняться
         </p>
       </div>
@@ -56,14 +56,14 @@ export default async function HomePage() {
         {sections.map((s) => (
           <Link key={s.href} href={s.href}>
             <div
-              className={`flex items-center gap-5 rounded-2xl p-5 md:p-6 text-white transition-all ${s.bg} ${s.hover} ${s.shadow} ${s.hoverShadow} ${s.textColor || ''}`}
+              className={`flex items-center gap-5 rounded-2xl p-6 md:p-7 text-white transition-all ${s.bg} ${s.hover} ${s.shadow} ${s.hoverShadow} ${s.textColor || ''}`}
             >
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-white/20">
-                <s.icon className="h-7 w-7" />
+              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-white/20">
+                <s.icon className="h-8 w-8" />
               </div>
               <div>
-                <div className="text-2xl font-extrabold">{s.title}</div>
-                <div className={`text-base font-bold opacity-90 ${s.textColor ? 'text-[#3f3f3f]/70' : ''}`}>
+                <div className="text-3xl font-extrabold">{s.title}</div>
+                <div className={`text-lg font-bold opacity-90 ${s.textColor ? 'text-[#3f3f3f]/70' : ''}`}>
                   {s.desc}
                 </div>
               </div>
@@ -74,8 +74,8 @@ export default async function HomePage() {
 
       {/* Daily tip */}
       <div className="mt-10 rounded-2xl border-2 border-[#e5e5e5] bg-white p-6 text-center">
-        <div className="text-lg font-bold text-[#3f3f3f] mb-2">💡 Совет дня</div>
-        <p className="text-base text-[#777]">
+        <div className="text-xl font-bold text-[#3f3f3f] mb-2">💡 Совет дня</div>
+        <p className="text-lg text-[#777]">
           Регулярность важнее интенсивности. Лучше 15 минут каждый день, чем 2 часа раз в неделю.
         </p>
       </div>

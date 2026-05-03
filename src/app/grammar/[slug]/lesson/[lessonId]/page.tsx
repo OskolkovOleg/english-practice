@@ -34,24 +34,24 @@ export default async function LessonPage({ params }: Props) {
       </Link>
 
       <div className="mb-8">
-        <div className="text-base font-bold text-[#58cc02] mb-1">{topic.title}</div>
-        <h1 className="text-3xl md:text-4xl font-extrabold text-[#3f3f3f]">{lesson.title}</h1>
+        <div className="text-lg font-bold text-[#58cc02] mb-1">{topic.title}</div>
+        <h1 className="text-4xl md:text-5xl font-extrabold text-[#3f3f3f]">{lesson.title}</h1>
       </div>
 
       <Tabs defaultValue="theory" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-2 max-w-sm h-14 rounded-xl bg-[#f7f9fc] p-1">
+        <TabsList className="grid w-full grid-cols-2 max-w-sm h-16 rounded-xl bg-[#f7f9fc] p-1">
           <TabsTrigger
             value="theory"
-            className="gap-2 text-base font-extrabold rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-[#58cc02]"
+            className="gap-2 text-lg font-extrabold rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-[#58cc02]"
           >
-            <BookOpen className="h-5 w-5" />
+            <BookOpen className="h-6 w-6" />
             Теория
           </TabsTrigger>
           <TabsTrigger
             value="practice"
-            className="gap-2 text-base font-extrabold rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-[#1cb0f6]"
+            className="gap-2 text-lg font-extrabold rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-[#1cb0f6]"
           >
-            <PenTool className="h-5 w-5" />
+            <PenTool className="h-6 w-6" />
             Практика
           </TabsTrigger>
         </TabsList>
