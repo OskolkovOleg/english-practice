@@ -3,12 +3,13 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { BookOpen, Brain, Layers, Home, Menu, X } from 'lucide-react';
+import { BookOpen, Brain, Layers, Home, Menu, X, Trophy } from 'lucide-react';
 import { useState } from 'react';
 import { ProgressHeader } from './progress-header';
 
 const navItems = [
   { href: '/', label: 'Главная', icon: Home },
+  { href: '/roadmap', label: 'План', icon: Trophy },
   { href: '/grammar', label: 'Грамматика', icon: BookOpen },
   { href: '/practice', label: 'Практика', icon: Brain },
   { href: '/words', label: 'Слова', icon: Layers },
