@@ -33,7 +33,9 @@ function normalizeAnswer(ans: string): string {
 }
 
 function isAnswerCorrect(user: string, correct: string): boolean {
-  return normalizeAnswer(user) === normalizeAnswer(correct);
+  const u = normalizeAnswer(user);
+  const c = normalizeAnswer(correct);
+  return u === c || u.startsWith(c) || c.startsWith(u);
 }
 
 export function ExercisePlayer({ exercises }: ExercisePlayerProps) {

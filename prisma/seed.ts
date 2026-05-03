@@ -260,7 +260,7 @@ async function main() {
                 { type: 'translation', question: 'Она сейчас готовит ужин.', correctAnswer: 'She is cooking dinner now.', hint: 'Now — сейчас, cook → cooking.', difficulty: 1 },
                 { type: 'translation', question: 'Мы смотрим фильм в данный момент.', correctAnswer: 'We are watching a film at the moment.', hint: 'At the moment — в данный момент.', difficulty: 1 },
                 { type: 'fillblank', question: 'Look! The children ___ (play) in the garden.', correctAnswer: 'are playing', hint: 'Look! — сигнал к действию прямо сейчас.', difficulty: 1 },
-                { type: 'quiz', question: 'Выберите правильный вариант:', correctAnswer: 'I am not understanding this word.', options: JSON.stringify(['I am not understanding this word.', 'I do not understand this word.', 'I not understand this word.']), explanation: 'Understand — глагол состояния, обычно не используется в Continuous. Правильный ответ: do not understand.', difficulty: 2 },
+                { type: 'quiz', question: 'Выберите правильный вариант:', correctAnswer: 'I do not understand this word.', options: JSON.stringify(['I am not understanding this word.', 'I do not understand this word.', 'I not understand this word.']), explanation: 'Understand — глагол состояния, обычно не используется в Continuous.', difficulty: 2 },
                 { type: 'translation', question: 'Они не работают сегодня.', correctAnswer: "They aren't working today.", hint: 'Today — сегодня.', difficulty: 1 },
               ],
             },
