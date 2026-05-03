@@ -24,9 +24,74 @@ interface ExercisePlayerProps {
   exercises: Exercise[];
 }
 
+function expandContractions(ans: string): string {
+  const map: Record<string, string> = {
+    "don't": 'do not',
+    "doesn't": 'does not',
+    "didn't": 'did not',
+    "won't": 'will not',
+    "wouldn't": 'would not',
+    "can't": 'cannot',
+    "couldn't": 'could not',
+    "shouldn't": 'should not',
+    "mustn't": 'must not',
+    "mightn't": 'might not',
+    "needn't": 'need not',
+    "shan't": 'shall not',
+    "isn't": 'is not',
+    "aren't": 'are not',
+    "wasn't": 'was not',
+    "weren't": 'were not',
+    "hasn't": 'has not',
+    "haven't": 'have not',
+    "hadn't": 'had not',
+    "i'm": 'i am',
+    "you're": 'you are',
+    "we're": 'we are',
+    "they're": 'they are',
+    "i've": 'i have',
+    "you've": 'you have',
+    "we've": 'we have',
+    "they've": 'they have',
+    "i'll": 'i will',
+    "you'll": 'you will',
+    "he'll": 'he will',
+    "she'll": 'she will',
+    "it'll": 'it will',
+    "we'll": 'we will',
+    "they'll": 'they will',
+    "i'd": 'i would',
+    "you'd": 'you would',
+    "he'd": 'he would',
+    "she'd": 'she would',
+    "it'd": 'it would',
+    "we'd": 'we would',
+    "they'd": 'they would',
+    "he's": 'he is',
+    "she's": 'she is',
+    "it's": 'it is',
+    "that's": 'that is',
+    "what's": 'what is',
+    "who's": 'who is',
+    "where's": 'where is',
+    "when's": 'when is',
+    "why's": 'why is',
+    "how's": 'how is',
+    "let's": 'let us',
+    "there's": 'there is',
+    "here's": 'here is',
+  };
+
+  let result = ans.toLowerCase();
+  for (const [contraction, expanded] of Object.entries(map)) {
+    const regex = new RegExp(`\\b${contraction}\\b`, 'g');
+    result = result.replace(regex, expanded);
+  }
+  return result;
+}
+
 function normalizeAnswer(ans: string): string {
-  return ans
-    .toLowerCase()
+  return expandContractions(ans)
     .replace(/[.,!?;:]/g, '')
     .replace(/\s+/g, ' ')
     .trim();
